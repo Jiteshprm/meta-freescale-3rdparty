@@ -1,0 +1,79 @@
+From 373948a2d0fcc5df08f4467c35d4a10d9c735d3e Mon Sep 17 00:00:00 2001
+From: jitesh <jiteshprm@gmail.com>
+Date: Sat, 6 Jun 2020 22:51:19 +0100
+Subject: [PATCH 1/2] Add the Recipe for Realtel RTL8812au Wireless Dongle
+ kernel-module-rtl8812au_git.bb
+
+---
+ .../kernel-module-rtl8812au_git.bb            | 33 +++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+ create mode 100644 recipes-kernel/kernel-modules/kernel-module-rtl8812au_git.bb
+
+diff --git a/recipes-kernel/kernel-modules/kernel-module-rtl8812au_git.bb b/recipes-kernel/kernel-modules/kernel-module-rtl8812au_git.bb
+new file mode 100644
+index 0000000..8bfbb34
+--- /dev/null
++++ b/recipes-kernel/kernel-modules/kernel-module-rtl8812au_git.bb
+@@ -0,0 +1,33 @@
++# Copyright (C) 2020 Realtek.
++
++SUMMARY = "Realtek RTL8812AU wireless driver module"
++LICENSE = "ISC"
++LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/ISC;md5=f3b90e78ea0cffb20bf5cca7947a896d"
++
++# Reference Realtek RTL8812AU tag/version
++PV = "v5.2.20.2+${SRCPV}"
++
++SRCBRANCH = "master"
++SRCREV = "fc6e5c3e7c33a9f892a41f920da0ced9688da38f"
++
++SRC_URI = "\
++    git://github.com/Jiteshprm/rtl8812au.git;protocol=git;branch=${SRCBRANCH} \
++"
++
++S = "${WORKDIR}/git"
++
++inherit module
++
++do_compile_prepend() {
++    #export BUILD_VER=${PV}
++}
++
++do_install_prepend() {
++
++}
++
++do_install_append() {
++
++}
++
++COMPATIBLE_MACHINE = "(imx6dl-riotboard)"
+-- 
+2.20.1 (Apple Git-117)
+
+
+From dc6f551a938128465e86b2efb75d2383acf63e6d Mon Sep 17 00:00:00 2001
+From: jitesh <jiteshprm@gmail.com>
+Date: Sun, 7 Jun 2020 02:03:13 +0100
+Subject: [PATCH 2/2] Add kernel module build kernel-module-rtl8812au to
+ MACHINE_ESSENTIAL_EXTRA_RDEPENDS
+
+---
+ conf/machine/imx6dl-riotboard.conf | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/conf/machine/imx6dl-riotboard.conf b/conf/machine/imx6dl-riotboard.conf
+index e3e2f05..7d73108 100644
+--- a/conf/machine/imx6dl-riotboard.conf
++++ b/conf/machine/imx6dl-riotboard.conf
+@@ -20,6 +20,7 @@ MACHINE_ESSENTIAL_EXTRA_RDEPENDS += " \
+     kernel-image \
+     kernel-devicetree \
+     u-boot-fslc \
++    kernel-module-rtl8812au \
+ "
+ 
+ WKS_FILES = "imx-uboot.wks"
+-- 
+2.20.1 (Apple Git-117)
+
